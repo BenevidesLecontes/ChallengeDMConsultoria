@@ -1,0 +1,182 @@
+<div class="menu">
+    <div class="search" data-ng-show="isVisible">
+        <input type="text" data-ng-model="search" placeholder="pesquisar...">
+        <i class="fa fa-search" aria-hidden="true"></i>
+    </div>
+    <div class="customer-wrap">
+        <ul data-ng-show="isVisible">
+            <li data-ng-repeat="item in customers | filter:search" >
+                <div data-ng-click="showCustomerDetail(item.codigo)">
+                    <p>{{ item.email }}</p>
+                    <span>{{ item.nome }}</span>
+                    <p>{{ item.cpf }}</p>
+                </div>
+            </li>
+        </ul>
+        <div class="profile-wrap" data-ng-hide="isVisible">
+            <div class="profile-header">
+                <div class="profile-img">
+                    <i class="fa fa-arrow-left" aria-hidden="true" data-ng-click="showCustomerDetail()"></i>
+                    <img src="{{ customer.thumb }}">
+                </div>
+                <div class="profile-description">
+                    <p>{{ customer.nome }}</p>
+                    <p>CPF: {{ customer.cpf }}. Cód: {{ customer.codigo }}</p>
+                </div>
+            </div>
+            <div class="profile-content">
+                <ul>
+                    <li>
+                        <span>
+                            OBSERVAÇÕES IMPORTANTES
+                        <span>
+                        <p>
+                            {{ customer.obs }}   
+                        </p>
+                    </li>
+                    <li>
+                        <span>
+                            E-MAIL
+                        <span>
+                        <p>
+                            {{ customer.email }}       
+                        </p>
+                    </li>
+                    <li>
+                        <span>
+                            TELEFONE
+                        <span>
+                        <p>
+                            + {{ customer.telefone.pais }} 
+                              {{ customer.telefone.area }} 
+                              {{ customer.telefone.numero }}         
+                        </p>
+                    </li>
+                    <li>
+                        <span>
+                            ENDEREÇO
+                        <span>
+                        <p>
+                            {{ customer.endereco.tipo }}     
+                            {{ customer.endereco.logradouro }},
+                            {{ customer.endereco.numero }},
+                            {{ customer.endereco.complemento }} -
+                            {{ customer.endereco.bairro }} - 
+                            {{ customer.endereco.cidade }} - 
+                            {{ customer.endereco.Estado }}
+                        </p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<main class="main">
+    <header class="header">
+        <h2>Fidelidade</h2>
+    </header>
+    <div class="points-wrap">
+        <div class="poits-header">
+            <div class="button-wrap" data-ng-click="viewPoints(1)" data-ng-class="{'active-button': isActiveTransactions == true}">
+                <button class="btn-transactions">TRANSAÇÕES</button>
+            </div>
+            <div class="button-wrap" data-ng-click="viewPoints(2)" data-ng-class="{'active-button': isActiveBenefits == true}">
+                <button class="btn-benefits">BENEFÍCIOS</button>
+            </div>
+            <div class="button-wrap" data-ng-click="viewPoints(3)" data-ng-class="{'active-button': isActiveHistorys == true}">
+                <button class="btn-historys">HISTÓRICOS</button>
+            </div>
+        </div>
+        <div class="poits-content" data-ng-show="isActiveTransactions">
+            <div class="input-wrap">
+                <label>Saldo</label>
+                <input type="text" readonly="readonly" data-ng-model="points.saldo"/>
+            </div>
+            <div class="input-wrap">
+                <label>Histórico</label>
+                <input type="text" readonly="readonly" data-ng-model="points.total"/>
+            </div>
+            <div class="input-wrap">
+                <label>Utilizados</label>
+                <input type="text" readonly="readonly" data-ng-model="points.utilizados"/>
+            </div>
+            <div class="input-wrap">
+                <label>Perdidos</label>
+                <input type="text" readonly="readonly" data-ng-model="points.expirados"/>
+            </div>
+        </div>
+        <div class="poits-content" data-ng-show="isActiveBenefits">
+           <h2>Não há exibição disponivel.</h2>
+        </div>
+        <div class="poits-content" data-ng-show="isActiveHistorys">
+            <h2>Não há exibição disponivel.</h2>
+        </div>
+    </div>
+    <div class="content-wrap">
+        <div class="add-invoice">
+            <div class="header-invoice">
+                <h3>Adicionar nota</h3>
+            </div>
+            <div class="content-invoice">
+                <div class="input-wrap">
+                    <label>Loja</label>
+                    <input type="text" placeholder="Razão social, nome Fantasia ou CNPJ" data-ng-model="invoice.loja"/>
+                </div>
+                <div class="input-wrap">
+                        <label>Nº DA NOTA</label>
+                        <input type="number" placeholder="---" data-ng-model="invoice.nNota"/>
+                </div>
+                <div class="input-wrap">
+                    <label>DATA DA NOTA</label>
+                    <input type="date" placeholder="---" data-ng-model="invoice.data"/>
+                </div>
+                <div class="input-wrap">
+                    <label>FORMA DE PAGAMENTO</label>
+                    <select>
+                        <option>Selecionar</option>
+                    </select>
+                </div>
+                <div class="input-wrap">
+                    <label>VALOR</label>
+                    <input type="text" placeholder="R$ ---" data-ng-model="invoice.valor"/>
+                </div>
+                <div class="button-wrap">
+                    <button data-ng-click="add()">Adicionar</button>
+                    <button>Cancelar</button>
+                </div>
+            </div>
+        </div>
+        <div class="add-register">
+            <div class="header-register">
+                <h3>Cadastrar notas</h3>
+                <span>Você precisa confirmar o cadastro dessa lista de notas</span>
+            </div>
+            <div class="content-register">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>LOJA</th>
+                            <th>Nº DA NOTA</th>
+                            <th>DATA DA NOTA</th>
+                            <th>CADASTRO</th>
+                            <th>VALOR</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr data-ng-repeat="item in invoices track by $index">
+                            <td>{{item.loja}}</td>
+                            <td>{{item.nNota}}</td>
+                            <td>{{item.data | date:'dd/MM/yyyy'}}</td>
+                            <td>{{item.cadastro}}</td>  
+                            <td>{{item.valor | currency : "R$" }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="button-wrap" data-ng-hide="isVisible">
+                    <button data-ng-click="register()">Adicionar</button>
+                    <button>Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
