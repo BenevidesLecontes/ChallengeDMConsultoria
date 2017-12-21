@@ -15,22 +15,6 @@ var app = angular.module('ChallengeDmApp', ['ngRoute']).config(['$routeProvider'
 
 "use strict";
 
-var CustomerService = function CustomerService($http) {
-    // let data = [{"codigo":1,"nome":"Paulo Santos de Almeida","email":"paulo.santos@email.com","cpf":"02341233409"},{"codigo":2,"nome":"Antonio Marques da Silva","email":"tonhomsilva@email.com","cpf":"23456789012"},{"codigo":3,"nome":"João Sousa Siqueira","email":"jaosiq@email.com","cpf":"34567890123"},{"codigo":4,"nome":"Armando Jogada","email":"armando.player@gmail.com","cpf":"45678901234"},{"codigo":5,"nome":"Jordência Sexta","email":"jordanfriday@hotmail.com","cpf":"56789012345"},{"codigo":6,"nome":"Kelly Guissa","email":"salsich@obig.net","cpf":"67890123456"}];
-
-    var loadCustomers = function loadCustomers() {
-        $http.get('analysis/access').then(function (res) {
-            cb({ customers: res.data });
-        }, function () {
-            cb({ error: 'Erro ao carregar relatório.' });
-        });
-    };
-};
-
-CustomerService.$inject = ['$http'];
-app.service('CustomerService', CustomerService);
-"use strict";
-
 var InvoiceController = function () {
     function InvoiceController($scope, CustomerService) {
         _classCallCheck(this, InvoiceController);
@@ -82,7 +66,9 @@ var InvoiceController = function () {
         }
     }, {
         key: 'register',
-        value: function register() {}
+        value: function register() {
+            console.log(this.scope.invoices);
+        }
     }, {
         key: 'viewPoints',
         value: function viewPoints(type) {
@@ -107,7 +93,6 @@ var InvoiceController = function () {
     }, {
         key: 'showCustomerDetail',
         value: function showCustomerDetail(id) {
-            console.log(id);
             this.scope.isVisible = this.scope.isVisible ? false : true;
 
             if (this.scope.isVisible) {
@@ -117,8 +102,6 @@ var InvoiceController = function () {
                 this.scope.customer = this.scope.getCustomer(id);
                 this.scope.points = this.scope.loadPoints();
             }
-
-            console.log(this.scope.isVisible);
         }
     }, {
         key: 'getCustomer',

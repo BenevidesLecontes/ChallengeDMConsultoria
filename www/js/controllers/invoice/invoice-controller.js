@@ -48,7 +48,7 @@ class InvoiceController {
     }
 
     register() {
-        
+        console.log(this.scope.invoices);
     }
 
     viewPoints(type){
@@ -72,7 +72,6 @@ class InvoiceController {
     }
 
     showCustomerDetail(id) {
-        console.log(id);
         this.scope.isVisible = this.scope.isVisible ? false : true;
 
         if(this.scope.isVisible){
@@ -83,8 +82,6 @@ class InvoiceController {
             this.scope.customer = this.scope.getCustomer(id);
             this.scope.points = this.scope.loadPoints();
         }
-        
-        console.log(this.scope.isVisible);
     }
 
     getCustomer(id) {
